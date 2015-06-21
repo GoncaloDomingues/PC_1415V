@@ -17,7 +17,7 @@ namespace FutureHolderNonBlocking
 
 
         public void SetValue(T value)
-        {
+        { 
             if (IsValueAvailable())
                 return;
 

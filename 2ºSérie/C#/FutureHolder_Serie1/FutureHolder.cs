@@ -9,7 +9,7 @@ namespace _1ºSérie
 {
    public class FutureHolder<T>
     {
-        bool _hasValue = false;
+        bool _hasValue = false; 
         T _newValue=default(T);
         private readonly object toLock = new object();
 

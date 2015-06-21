@@ -1,2 +1,0 @@
-E:\ISEL\2014_2015\2ºSemestre\PC\2ºSérie\C#\Serie 2\Serie 2\bin\Debug\Serie 2.exe.config
-E:\ISEL\2014_2015\2ºSemestre\PC\2ºSérie\C#\Serie 2\Serie 2\obj\Debug\Serie 2.csprojResolveAssemblyReference.cache
