@@ -5,61 +5,67 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace _1ºSérie
+namespace FutureHolderNonBlocking
 {
-   public class FutureHolder<T>
+    class FutureHolderNonBlocking<T> where T : class
     {
-        bool _hasValue = false;
-        T _newValue=default(T);
-        private readonly object toLock = new object();
 
-    
+        private volatile bool _hasValue = false;
+        private T _newValue = default(T);
+
+
+
+
         public void SetValue(T value)
         {
-            lock (toLock)
-            {
-                if(IsValueAvailable())
-                    throw new InvalidOperationException();
+            if (IsValueAvailable())
+                return;
 
-                _newValue = value;
+            if ((Interlocked.CompareExchange(ref _newValue, value, default(T))) == default(T))
+            {
                 _hasValue = true;
-                Monitor.PulseAll(toLock);
+                lock (this)
+                {
+                    Monitor.PulseAll(this);
+                }
             }
         }
 
         public T GetValue(long timeout)
         {
-            lock (toLock)
+
+
+            if (IsValueAvailable())
             {
-                int _lastTime = (timeout != Timeout.Infinite) ? Environment.TickCount : 0;
-                
-                 if (IsValueAvailable())
-                {
-                    return _newValue;
-                }
+                return _newValue;
 
+            }
 
+            lock (this)
+            {
                 try
                 {
-                    Monitor.Wait(toLock,timeout);
+                    Monitor.Wait(this, (int)timeout);
                     return _newValue;
                 }
                 catch (ThreadInterruptedException)
                 {
-                    if(IsValueAvailable()){
+                    if (IsValueAvailable())
+                    {
                         Thread.CurrentThread.Interrupt();
                         return _newValue;
                     }
                     throw;
                 }
 
-                return default(T);
             }
+
         }
 
         public bool IsValueAvailable()
         {
             return _hasValue;
         }
+
     }
 }
