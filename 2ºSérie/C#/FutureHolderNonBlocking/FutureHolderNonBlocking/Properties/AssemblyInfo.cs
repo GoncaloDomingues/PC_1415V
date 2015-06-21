@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Serie 2")]
+[assembly: AssemblyTitle("FutureHolderNonBlocking")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Serie 2")]
+[assembly: AssemblyProduct("FutureHolderNonBlocking")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("29b18554-b142-45e4-ba2c-5b122d4de8d6")]
+[assembly: Guid("1dce0b39-b23f-4a44-b962-948f0417c210")]
 
 // Version information for an assembly consists of the following four values:
 //

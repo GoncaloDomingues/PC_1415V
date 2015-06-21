@@ -9,8 +9,8 @@ namespace _1ºSérie
 {
    public class FutureHolder<T>
     {
-        bool _hasValue = false;
-        T _newValue;
+        bool _hasValue = false; 
+        T _newValue=default(T);
         private readonly object toLock = new object();
 
     
@@ -18,6 +18,9 @@ namespace _1ºSérie
         {
             lock (toLock)
             {
+                if(IsValueAvailable())
+                    throw new InvalidOperationException();
+
                 _newValue = value;
                 _hasValue = true;
                 Monitor.PulseAll(toLock);
@@ -29,29 +32,25 @@ namespace _1ºSérie
             lock (toLock)
             {
                 int _lastTime = (timeout != Timeout.Infinite) ? Environment.TickCount : 0;
-
-                try
+                
+                 if (IsValueAvailable())
                 {
-                    Monitor.Wait(toLock);
-                }
-                catch (ThreadInterruptedException)
-                {
-                    throw new ThreadInterruptedException();
-                }
-
-                if (IsValueAvailable())
-                {
-                    Monitor.Pulse(toLock);
                     return _newValue;
                 }
 
-                int timeFinal = (int)timeout;
 
-
-                if (SyncUtils.AdjustTimeout(ref _lastTime, ref timeFinal) == 0)
+                try
                 {
-                    Monitor.Pulse(this);
-                    return default(T);
+                    Monitor.Wait(toLock,timeout);
+                    return _newValue;
+                }
+                catch (ThreadInterruptedException)
+                {
+                    if(IsValueAvailable()){
+                        Thread.CurrentThread.Interrupt();
+                        return _newValue;
+                    }
+                    throw;
                 }
 
                 return default(T);
