@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="Ex1.SynchronousQueueTest.SynchronousQueueTakePutTest" /><Add Test="Ex1.SynchronousQueueTest.SynchronousQueueTakeNothingTest" /><Add Test="Ex1.SynchronousQueueTest.SynchronousQueueTakePutQueueTest" /><Add Test="Ex1.SynchronousQueueTest.SynchronousQueuePutNullTest" /></Playlist>
